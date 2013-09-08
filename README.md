@@ -3,7 +3,8 @@ todolist
 
 Simple todo list
 
-DB for project:
+## DB for project:
+
 CREATE database ruby;
 CREATE TABLE `projects` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
