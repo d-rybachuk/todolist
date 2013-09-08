@@ -1,7 +1,10 @@
 todolist
 ========
 
-Simple todo list
+## Simple todo list
+Link to DEMO [http://weblogic.o3.ua/demo/todolist]
+username: test
+password: test
 
 ## DB for project:
 
