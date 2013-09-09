@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>task-flow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="css/apprise-1.5.min.css" rel="stylesheet">
+    <!-- Simpletodo project -->
+    <link href="css/todolist.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">SIMPLE TODO LIST</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <form class="navbar-form navbar-right">
+              <div class="form-group">
+                <input id="user" type="text" placeholder="User" class="form-control">
+              </div>
+              <div class="form-group">
+                <input id="pass" type="password" placeholder="Password" class="form-control">
+              </div>
+              <button id="auth" type="button" class="btn btn-success">Sign in</button>
+            </form>
+          </div><!--/.navbar-collapse -->
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class=".col-xs-8 col-md-8 col-md-offset-2 text-center todo-list"></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <div class="container">
+        <div class="row">
+          <p class="text-center">&copy; Ruby Garage</p></div>
+        </div>
+      </div>
+    </div>
+	
+    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="js/apprise-1.5.min.js"></script>
+    <!-- Simpletodo project -->
+    <script src="js/todolist.js"></script>
+  </body>
+</html>

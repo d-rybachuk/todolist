@@ -1,0 +1,45 @@
+html,
+body {
+  height: 100%;
+}
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
+}
+#footer {
+  height: 60px;
+}
+code {
+  font-size: 80%;
+}
+.projects {
+   width: 100%;
+}
+.project-header {
+  margin-bottom: 0;
+}
+td.task-checkbox {
+  border-right: 1px solid red !important; 
+  height: 100%; 
+  width: 39px;
+}
+.calendar {
+  max-width: 25px;
+  min-width: 15px;
+}
+.utils {
+  width: 125px;
+}
+.glyphicon-visible {
+  visibility: visible;
+  cursor: pointer;
+}
+.glyphicon-hidden {
+  visibility: hidden;
+}
+.highlight-on {
+  background-color: #fbfcd4;
+}
