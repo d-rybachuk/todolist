@@ -35,8 +35,8 @@ $(document).ready(function(){
     $(this).parents('tbody').sortable({
       'update': function (event, ui) {
           var order = $(this).sortable('serialize');
-          var id = $(this).parents('tr').attr('id');
-          var parent_id = $(this).parents('tr').parents('tr').attr('id');
+          var id = $(this).parents('tr:first').attr('id');
+          var parent_id = $(this).parents('tr:first').parents('tr:first').attr('id');
         sorted(order,id,parent_id);
       }
     });
@@ -48,40 +48,40 @@ $(document).ready(function(){
   });
 //Make  task name and project name editable
   $(document.body).on('click','.glyphicon-pencil', function (){
-    var data = $(this).parents('tr').find('p').first().text();
-    $(this).parents('tr').find('.project-datepicker').replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
-    $(this).parents('tr').find('#task_name').first()
-    .replaceWith('<form class="form-inline" role="form"><div class="input-group input-group-sm newtask_name"><input id="edit_task_name" type="text" value="'+data+'" placeholder="Start typing here to create a task..." class="form-control"><span class="input-group-btn"><button id="edit_task" class="btn btn-primary" type="button">Edit</button></span></div></div>');
-    $(this).parents('tr').find('.glyphicon-pencil').first().replaceWith('<span id="hide_pen"></span>');
+    var task_name = $(this).parents('tr:first').find('.task_name').first().text();
+    $(this).parents('tr:first').find('.project-datepicker').replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
+    $(this).parents('tr:first').find('.task_name').first()
+    .replaceWith('<form class="form-inline" role="form"><div class="input-group input-group-sm newtask_name"><input id="edit_task_name" type="text" value="'+task_name+'" placeholder="Start typing here to create a task..." class="form-control"><span class="input-group-btn"><button id="edit_task" class="btn btn-primary" type="button">Edit</button></span></div></div>');
+    $(this).parents('tr:first').find('.glyphicon-pencil').first().replaceWith('<span id="hide_pen"></span>');
   });
 //Run datapicker
   $(document.body).on('click','.glyphicon-calendar', function (){
     $('.project-datepicker').each(function(){
        $('.project-datepicker').replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
     })
-    var data = $(this).parents('tr').find('.project-date p').text();
-    var newtaskname = $(this).parents('tr').find('#edit_task_name').first().val();
-    $(this).parents('tr').find('#hide_pen').replaceWith('<span class="glyphicon glyphicon-pencil">&nbsp;|&nbsp;</span>');
-    $(this).parents('tr').find('.newtask_name').first().replaceWith('<p id="task_name">'+newtaskname+'</p>');
-    $(this).parents('tr').find('.project-calendar')
+    var data = $(this).parents('tr:first').find('.project-date p').text();
+    var newtaskname = $(this).parents('tr:first').find('#edit_task_name').first().val();
+    $(this).parents('tr:first').find('#hide_pen').replaceWith('<span class="glyphicon glyphicon-pencil">&nbsp;|&nbsp;</span>');
+    $(this).parents('tr:first').find('.newtask_name').first().replaceWith('<p id="task_name">'+newtaskname+'</p>');
+    $(this).parents('tr:first').find('.project-calendar')
     .replaceWith('<div class="project-datepicker text-left"><div class="input-group input-group-sm"><input id="datapicker" value="'+data+'" type="text" class="form-control"><span class="input-group-btn"><button  id="hide_date" class="btn btn-primary"><</span></button></span></div></div>');
   });
 $(document.body).on('focus',"#datapicker", function(){
-    var id = $(this).parents('tr').attr('id');
-    $(this).parents('tr').find('#datapicker').datepicker({ 
+    var id = $(this).parents('tr:first').attr('id');
+    $(this).parents('tr:first').find('#datapicker').datepicker({ 
       autoSize: true ,
       dateFormat: "yy-mm-dd ",
       onSelect: function(data) {
        change_data(data,id);
-       $(this).parents('tr').find('.project-date p').text(data);
+       $(this).parents('tr:first').find('.project-date p').text(data);
       }
     });
 });
 //Hide date
   $(document.body).on('click','#hide_date', function (){
-    var data = $(this).parents('tr').find('#datapicker').val(); 
-    $(this).parents('tr').find('#get_data').first().val(data);
-    $(this).parents('tr').find('.project-datepicker')
+    var data = $(this).parents('tr:first').find('#datapicker').val(); 
+    $(this).parents('tr:first').find('#get_data').first().val(data);
+    $(this).parents('tr:first').find('.project-datepicker')
      .replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
 
   });
@@ -137,7 +137,7 @@ function new_project(id,task,data) {
           $('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar glyphicon-hidden"></span>')
         )
         .append ( 
-          $('<div class="project-title text-left"><p id="task_name">'+task+'</p>')
+          $('<div class="project-title text-left"><p class="task_name">'+task+'</p>')
         )
         .append (
           $('<div class="project-utils text-right"><span class="glyphicon glyphicon-pencil glyphicon-hidden">&nbsp;|&nbsp;</span><span class="glyphicon glyphicon-trash glyphicon-hidden"></span>')
@@ -160,7 +160,7 @@ function new_task(parent_id,id,task,checkbox) {
     $('<td class="task-checkbox"><input type="checkbox" '+checkbox+'>')
   )
   .append (
-    $('<td class="text-left"><p id="task_name">'+task+'</p>')
+    $('<td class="text-left"><p class="task_name">'+task+'</p>')
   )
   .append (
     $('<td class="text-right utils"><span class="glyphicon glyphicon-resize-vertical glyphicon-hidden">&nbsp;|&nbsp;</span><span class="glyphicon glyphicon-pencil glyphicon-hidden">&nbsp;|&nbsp;</span><span class="glyphicon glyphicon-trash glyphicon-hidden"></span>')
@@ -202,8 +202,8 @@ function add_project() {
 }
 //Add new task
 function add_task(link) {
-    var parent_id = link.parents('tr').attr('id');
-    var task = link.parents('tr').find('#newtask_name').val();
+    var parent_id = link.parents('tr:first').attr('id');
+    var task = link.parents('tr:first').find('#newtask_name').val();
     if (task){
     $.post("ajax.php", { user_id: sessionStorage.getItem('user_id'), parent_id: parent_id, task: task, key: '3'})
         .done(function(data){
@@ -216,7 +216,7 @@ function add_task(link) {
                     });
                   }
                })
-               link.parents('tr').find('#newtask_name').val('');
+               link.parents('tr:first').find('#newtask_name').val('');
         });
     }else{
       apprise('Field is empty!!! Please make correct input.')
@@ -224,26 +224,26 @@ function add_task(link) {
 }
 //Delete task
 function del_task(link) {
-    var task_id = match(link.parents('tr').attr('id'));
-    var parent_id = link.parents('tr').parents('tr').attr('id');
+    var task_id = match(link.parents('tr:first').attr('id'));
+    var parent_id = link.parents('tr:first').parents('tr:first').attr('id');
     apprise('Are you sure you want to remove item?',{'verify':true, 'textYes':'Yes', 'textNo':'No'}, function(data) {
       if(data){
              $.post("ajax.php", { user_id: sessionStorage.getItem('user_id'), task_id: task_id , parent_id: parent_id, key: '4'});
-             link.parents('tr').remove();
+             link.parents('tr:first').remove();
       }
     });
 }
 //Edit task name
 function edit_task(link) {
-    var task_id = match(link.parents('tr').attr('id'));
-    var parent_id = link.parents('tr').parents('tr').attr('id');
-    var task = link.parents('tr').find('#edit_task_name').first().val();
+    var task_id = match(link.parents('tr:first').attr('id'));
+    var parent_id = link.parents('tr:first').parents('tr:first').attr('id');
+    var task = link.parents('tr:first').find('#edit_task_name').first().val();
     if (task == ""){
       apprise('Field is empty!!! Please make correct input.')
     }else{
-      link.parents('tr').find('#hide_pen').replaceWith('<span class="glyphicon glyphicon-pencil">&nbsp;|&nbsp;</span>');
-      link.parents('tr').find('.project-datepicker').replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
-      link.parents('tr').find('.newtask_name').first().replaceWith('<p id="task_name">'+task+'</p>');
+      link.parents('tr:first').find('#hide_pen').replaceWith('<span class="glyphicon glyphicon-pencil">&nbsp;|&nbsp;</span>');
+      link.parents('tr:first').find('.project-datepicker').replaceWith('<div class="project-calendar text-left"><span class="glyphicon glyphicon-calendar"></span></div>');
+      link.parents('tr:first').find('.newtask_name').first().replaceWith('<p id="task_name">'+task+'</p>');
       $.post("ajax.php", { user_id: sessionStorage.getItem('user_id'), task_id: task_id, parent_id: parent_id, task: task, key: '5'});
     }
 }
@@ -253,8 +253,8 @@ function sorted(order,task_id,parent_id) {
 }
 //Change check box
 function check_box(link) {
-    var task_id = match(link.parents('tr').attr('id'));
-    var parent_id = link.parents('tr').parents('tr').attr('id');
+    var task_id = match(link.parents('tr:first').attr('id'));
+    var parent_id = link.parents('tr:first').parents('tr:first').attr('id');
     if(link.is(':checked')){
         var checkbox=1;
         link.prop("checked", true);
