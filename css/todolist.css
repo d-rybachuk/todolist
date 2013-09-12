@@ -18,20 +18,10 @@ code {
 .projects {
    width: 100%;
 }
-.project-header {
-  margin-bottom: 0;
-}
 td.task-checkbox {
   border-right: 1px solid red !important; 
   height: 100%; 
   width: 39px;
-}
-.calendar {
-  max-width: 25px;
-  min-width: 15px;
-}
-.utils {
-  width: 125px;
 }
 .glyphicon-visible {
   visibility: visible;
@@ -43,3 +33,47 @@ td.task-checkbox {
 .highlight-on {
   background-color: #fbfcd4;
 }
+
+.project-header {
+  display: table;
+  width: 100%;
+  -moz-box-sizing: border-box;      /* фикс проблемы для Firefox       */
+  -webkit-box-sizing: border-box;   /* фикс для старых Chrome и Safari */
+  box-sizing: border-box;           /* не поддерживается в CSS2        */
+  margin-left: 0;
+  margin-right: 0;
+}
+.project-header > div,
+.project-header > noindex > div {
+  display: table-cell;
+  vertical-align: top;
+  width: auto;
+  position: relative;
+  -moz-box-sizing: border-box;      /* фикс проблемы для Firefox       */
+  -webkit-box-sizing: border-box;   /* фикс для старых Chrome и Safari */
+  box-sizing: border-box;           /* не поддерживается в CSS2        */
+}
+.project-header > .project-calendar,
+.project-header > noindex > .project-calendar {
+  width: 40px;
+}
+
+.project-header > .project-utils,
+.project-header > noindex > .project-calendar {
+  max-width: 125px;
+  min-width: 65px;
+  overflow: hidden;
+}
+.project-header > .project-datepicker,
+.project-header > noindex > .project-datepicker {
+  width: 115px;
+}
+.project-header > .project-date,
+.project-header > noindex > .project-date {
+  display: none;
+}
+
+.utils {
+  width: 125px;
+}
+

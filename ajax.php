@@ -4,14 +4,22 @@ include "connect.php";
  `projects` (`id`,`name`,`user_id`,`date`)
  `tasks` ( `id`,`sort_id`,`name`,`status`,`project_id`)
 */
-$user_id = $mysqli->real_escape_string($_GET['user_id']);
-$task = $mysqli->real_escape_string($_GET['task']);
-$parent_id = $mysqli->real_escape_string($_GET['parent_id']);
-$task_id = $mysqli->real_escape_string($_GET['task_id']);
-$data = $_GET['data'];
+$user_id = $mysqli->real_escape_string($_POST['user_id']);
+$task = $mysqli->real_escape_string($_POST['task']);
+$parent_id = $mysqli->real_escape_string($_POST['parent_id']);
+$task_id = $mysqli->real_escape_string($_POST['task_id']);
+$user = $mysqli->real_escape_string($_POST['user']);
+$pass = $mysqli->real_escape_string($_POST['pass']);
+$data = $_POST['data'];
 
-
-switch ($_GET['key']){
+switch ($_POST['key']){
+case 0:
+  $q = $mysqli->query("SELECT id FROM auth WHERE user='".$user."' and pass ='".$pass."' limit 1;");
+  if($q){
+    $row = mysqli_fetch_array($q);
+      echo $row['id'];
+    }
+  break;
 //Init first
 case 1:
   if (empty($user_id)){
@@ -65,7 +73,7 @@ case 5:
   break;
 //Set priority of tasks
 case 6:
-  parse_str($_GET['order']);
+  parse_str($_POST['order']);
   $i=1;
   foreach ($task as $key=>$val){
     if(!$mysqli->query("UPDATE tasks set sort_id ='".$i."' WHERE id='".$val."' AND project_id='".$task_id."' limit 1;")){
@@ -76,7 +84,7 @@ case 6:
   break;
 //Get checkbox status
 case 7:
-  $checkbox = $_GET['checkbox'];
+  $checkbox = $_POST['checkbox'];
   $mysqli->query("UPDATE tasks set status ='".$checkbox."' WHERE id='".$task_id."' AND project_id='".$parent_id."' limit 1;");
   break;
 //Set date of prject
@@ -85,16 +93,6 @@ case 8:
     echo "Inserted value is empty";
   }else{
     $mysqli->query("UPDATE projects set date ='".$data."' WHERE id='".$task_id."' limit 1;");
-  }
-  break;
-//Get date of project
-case 9:
-  if (empty($task_id)){
-    echo "Inserted value is empty";
-  }else{
-    $q = $mysqli->query("SELECT date FROM projects WHERE id='".$task_id."' limit 1;");
-    $row = mysqli_fetch_array($q);
-    echo json_encode($row['date']);
   }
   break;
 }
